@@ -301,6 +301,7 @@ const form = document.getElementById("form");
     const drop = document.getElementById("serviceDrop");
     const sBtn = document.getElementById("serviceBtn");
     const sVal = document.getElementById("serviceRequested");
+    const SHEET = "https://script.google.com/macros/s/AKfycbwYHZybZYZ96zlJKFTwx0099AGlefyi2YNlgHDI0F6qAXbot4gl7_1BJthZ6h7falG-/exec";
     sBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); drop.classList.toggle("open"); });
     drop.querySelectorAll(".dd-list button").forEach((b) => {
       b.addEventListener("click", () => {
@@ -336,6 +337,13 @@ const form = document.getElementById("form");
         referredBy: document.getElementById("referredBy").value.trim()
       };
       btn.disabled = true; btn.textContent = "Sending…";
+      if (SHEET) {
+  fetch(SHEET, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams(payload)
+  });
+}
       if (FORM.action) {
         const post = document.createElement("form");
         post.method = "POST"; post.action = FORM.action; post.target = "sink"; post.style.display = "none";
